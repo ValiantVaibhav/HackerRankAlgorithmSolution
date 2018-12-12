@@ -1,0 +1,91 @@
+Watson gives Sherlock an array of integers. His challenge is to find an element of the array such that the sum of all elements to the left is equal to the sum of all elements to the right. For instance, given the array , is between two subarrays that sum to . If your starting array is , that element satisfies the rule as left and right sum to
+
+.
+
+You will be given arrays of integers and must determine whether there is an element that meets the criterion.
+
+Function Description
+
+Complete the balancedSums function in the editor below. It should return a string, either YES if there is an element meeting the criterion or NO otherwise.
+
+balancedSums has the following parameter(s):
+
+    arr: an array of integers
+
+
+
+SOLUITON:
+
+
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
+import java.util.regex.*;
+import java.util.stream.*;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+
+public class Solution {
+
+    // Complete the balancedSums function below.
+    static String balancedSums(List<Integer> arr) {
+        int left_sum=0;
+        int right_sum=0;
+
+
+        for(int i=0;i<arr.size();i++){
+            right_sum+=arr.get(i);
+        }
+
+        System.out.println(right_sum);
+
+        for(int i=0;i<arr.size();i++)
+        {
+            int current_element=arr.get(i);
+
+            right_sum = right_sum - current_element;
+
+            if(left_sum == right_sum)
+                return "YES";
+
+            left_sum+=current_element;
+        
+        }
+        return "NO";
+
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        int T = Integer.parseInt(bufferedReader.readLine().trim());
+
+        IntStream.range(0, T).forEach(TItr -> {
+            try {
+                int n = Integer.parseInt(bufferedReader.readLine().trim());
+
+                List<Integer> arr = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+                    .map(Integer::parseInt)
+                    .collect(toList());
+
+                String result = balancedSums(arr);
+
+                bufferedWriter.write(result);
+                bufferedWriter.newLine();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
+}
+
+
+
